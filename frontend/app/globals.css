@@ -3,11 +3,18 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-body {
+html.light body {
+  @apply bg-slate-100 text-slate-900 antialiased;
+  background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 35%),
+    radial-gradient(circle at left, rgba(14, 165, 233, 0.08), transparent 25%);
+}
+
+html.dark body {
+  color-scheme: dark;
   @apply bg-slate-950 text-slate-100 antialiased;
-  background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.16), transparent 35%),
-    radial-gradient(circle at left, rgba(14, 165, 233, 0.12), transparent 25%);
+  background-image: radial-gradient(circle at top right, rgba(16, 185, 129, 0.24), transparent 35%),
+    radial-gradient(circle at left, rgba(234, 179, 8, 0.14), transparent 25%);
 }

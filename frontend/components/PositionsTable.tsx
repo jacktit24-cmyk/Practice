@@ -37,9 +37,9 @@ export function PositionsTable({ positions }: { positions: PositionAnalytics[] }
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60">
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/60">
       <table className="w-full text-left text-sm">
-        <thead className="bg-slate-900 text-slate-400">
+        <thead className="bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400">
           <tr>
             {[
               ["symbol", "Symbol"],
@@ -53,7 +53,7 @@ export function PositionsTable({ positions }: { positions: PositionAnalytics[] }
                 <button
                   type="button"
                   onClick={() => onSort(key as SortableKey)}
-                  className="inline-flex items-center gap-1 transition hover:text-slate-200"
+                  className="inline-flex items-center gap-1 transition hover:text-slate-900 dark:hover:text-slate-200"
                 >
                   {label}
                 </button>
@@ -63,7 +63,7 @@ export function PositionsTable({ positions }: { positions: PositionAnalytics[] }
         </thead>
         <tbody>
           {sorted.map((position) => (
-            <tr key={position.id} className="border-t border-slate-800 text-slate-200">
+            <tr key={position.id} className="border-t border-slate-200 text-slate-700 dark:border-slate-800 dark:text-slate-200">
               <td className="px-4 py-3">{position.symbol}</td>
               <td className="px-4 py-3">{currency(position.marketValue)}</td>
               <td className={`px-4 py-3 ${signedClass(position.unrealizedPl)}`}>{currency(position.unrealizedPl)}</td>

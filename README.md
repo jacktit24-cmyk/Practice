@@ -5,8 +5,9 @@ Production-focused options analytics platform with a modular Next.js frontend an
 ## Architecture
 
 - `frontend/` — Next.js + TypeScript + Tailwind + Recharts + Zustand UI
-- `backend/` — FastAPI application and quantitative services
+- `backend/` — FastAPI application and quantitative/income strategy services
 - `backend/pricing/` — isolated Black-Scholes pricing and Greeks engine
+- `backend/app/services/wheel_service.py` — wheel strategy income/cycle analytics
 - `backend/market_data/` — provider abstraction for future Polygon/Tradier/Yahoo connectors
 
 ## Build Phases
@@ -14,7 +15,17 @@ Production-focused options analytics platform with a modular Next.js frontend an
 1. ✅ **Phase 1** — Scaffold full project structure
 2. ✅ **Phase 2** — Backend pricing engine + sensitivity grid + unit tests
 3. ✅ **Phase 3** — Frontend dashboard/sensitivity/projection module UI
-4. ✅ **Phase 4 (partial)** — Frontend Sensitivity module connected to backend API
+4. ✅ **Phase 4 (in progress)** — Live API integration + Wheel Strategy command center
+
+## New in this iteration
+
+- Added **Wheel Strategy** module (Tab 4) with command grid, income summary, DTE alerts, payoff chart, and capital release schedule.
+- Added backend wheel CRUD + dashboard endpoints with JSON persistence.
+- Added **market pulse** endpoint and dashboard widget for:
+  - CNN Fear & Greed
+  - Market regime score
+  - VIX price/change alert
+- Added light-theme default and dark-theme toggle.
 
 ## Local Setup
 
@@ -38,38 +49,21 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8000 npm run dev -- --hostname 0.0.0.0
 
 ## Testing
 
-Run backend pricing tests:
-
 ```bash
 cd backend
 PYTHONPATH=. pytest -q
-```
 
-Run frontend production build check:
-
-```bash
-cd frontend
+cd ../frontend
 npm run build
 ```
 
-## Current API Endpoints
+## API Endpoints
 
 - `GET /api/health`
 - `POST /api/pricing/sensitivity`
-
-### `POST /api/pricing/sensitivity` request body
-
-```json
-{
-  "ticker": "AAPL",
-  "option_type": "CALL",
-  "strike": 200,
-  "expiration_days": 45,
-  "implied_volatility": 0.35,
-  "current_stock_price": 195,
-  "stock_price_scenarios": [180, 190, 200, 210],
-  "volatility_scenarios": [0.25, 0.35, 0.45],
-  "time_horizon_days": [15, 30, 45],
-  "risk_free_rate": 0.05
-}
-```
+- `GET /api/market/signals`
+- `GET /api/wheel/dashboard`
+- `GET /api/wheel/positions`
+- `POST /api/wheel/positions`
+- `PATCH /api/wheel/positions/{position_id}`
+- `DELETE /api/wheel/positions/{position_id}`

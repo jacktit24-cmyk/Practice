@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import health, pricing
+from app.api.routes import health, market, pricing, wheel
 from app.core.config import Settings
 
 settings = Settings()
@@ -18,3 +18,5 @@ app.add_middleware(
 
 app.include_router(health.router, prefix="/api")
 app.include_router(pricing.router, prefix="/api")
+app.include_router(wheel.router, prefix="/api")
+app.include_router(market.router, prefix="/api")
