@@ -1,25 +1,68 @@
 # OptionsLab – Advanced Options Dashboard & Sensitivity Engine
 
-This repository contains the initial **Phase 1 scaffold** for a production-grade options analytics platform.
+Production-focused options analytics platform with a modular Next.js frontend and FastAPI backend.
 
 ## Architecture
 
 - `frontend/` — Next.js + TypeScript + Tailwind + Recharts + Zustand UI
-- `backend/` — FastAPI + Python quantitative services
-- `backend/pricing/` — isolated pricing and Greeks logic (Black-Scholes)
-- `backend/market_data/` — market data provider abstraction layer
+- `backend/` — FastAPI application and quantitative services
+- `backend/pricing/` — isolated Black-Scholes pricing and Greeks engine
+- `backend/market_data/` — provider abstraction for future Polygon/Tradier/Yahoo connectors
 
-## Current Status
+## Build Phases
 
-✅ Phase 1 complete: project scaffolding and modular folder structure
+1. ✅ **Phase 1** — Scaffold full project structure
+2. ✅ **Phase 2** — Backend pricing engine + sensitivity grid + unit tests
+3. ⏳ **Phase 3** — Frontend dashboard module implementation
+4. ⏳ **Phase 4** — Frontend/backend API integration
 
-## Planned Build Phases
+## Local Setup
 
-1. **Phase 1** — Scaffold full project structure
-2. **Phase 2** — Implement backend pricing engine and tests
-3. **Phase 3** — Build frontend dashboard UI modules
-4. **Phase 4** — Connect frontend and backend APIs
+### Backend (FastAPI)
 
-## Local Development (next phase)
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
-Detailed setup commands will be added as implementation files are introduced in the next step.
+### Frontend (Next.js)
+
+```bash
+cd frontend
+npm install
+npm run dev -- --hostname 0.0.0.0 --port 3000
+```
+
+## Testing
+
+Run backend pricing tests:
+
+```bash
+cd backend
+PYTHONPATH=. pytest -q
+```
+
+## Current API Endpoints
+
+- `GET /api/health`
+- `POST /api/pricing/sensitivity`
+
+### `POST /api/pricing/sensitivity` request body
+
+```json
+{
+  "ticker": "AAPL",
+  "option_type": "CALL",
+  "strike": 200,
+  "expiration_days": 45,
+  "implied_volatility": 0.35,
+  "current_stock_price": 195,
+  "stock_price_scenarios": [180, 190, 200, 210],
+  "volatility_scenarios": [0.25, 0.35, 0.45],
+  "time_horizon_days": [15, 30, 45],
+  "risk_free_rate": 0.05
+}
+```

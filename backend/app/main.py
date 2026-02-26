@@ -1,7 +1,8 @@
 """FastAPI entrypoint for OptionsLab backend."""
 from fastapi import FastAPI
 
-from app.api.routes import health
+from app.api.routes import health, pricing
 
 app = FastAPI(title="OptionsLab API", version="0.1.0")
 app.include_router(health.router, prefix="/api")
+app.include_router(pricing.router, prefix="/api")
