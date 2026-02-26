@@ -1,8 +1,20 @@
 """FastAPI entrypoint for OptionsLab backend."""
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import health, pricing
+from app.core.config import Settings
 
-app = FastAPI(title="OptionsLab API", version="0.1.0")
+settings = Settings()
+
+app = FastAPI(title=settings.app_name, version="0.1.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings.frontend_origin],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(health.router, prefix="/api")
 app.include_router(pricing.router, prefix="/api")

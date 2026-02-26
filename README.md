@@ -13,8 +13,8 @@ Production-focused options analytics platform with a modular Next.js frontend an
 
 1. ✅ **Phase 1** — Scaffold full project structure
 2. ✅ **Phase 2** — Backend pricing engine + sensitivity grid + unit tests
-3. ⏳ **Phase 3** — Frontend dashboard module implementation
-4. ⏳ **Phase 4** — Frontend/backend API integration
+3. ✅ **Phase 3** — Frontend dashboard/sensitivity/projection module UI
+4. ✅ **Phase 4 (partial)** — Frontend Sensitivity module connected to backend API
 
 ## Local Setup
 
@@ -33,7 +33,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```bash
 cd frontend
 npm install
-npm run dev -- --hostname 0.0.0.0 --port 3000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000 npm run dev -- --hostname 0.0.0.0 --port 3000
 ```
 
 ## Testing
@@ -43,6 +43,13 @@ Run backend pricing tests:
 ```bash
 cd backend
 PYTHONPATH=. pytest -q
+```
+
+Run frontend production build check:
+
+```bash
+cd frontend
+npm run build
 ```
 
 ## Current API Endpoints
