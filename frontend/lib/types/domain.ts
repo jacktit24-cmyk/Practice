@@ -1,10 +1,10 @@
 /**
- * Core frontend domain models used by dashboard, sensitivity, and projection modules.
- * These will be expanded as backend contracts are implemented.
+ * Shared frontend domain models for OptionsLab modules.
  */
 export type OptionType = "CALL" | "PUT";
 
 export interface PortfolioPosition {
+  id: string;
   symbol: string;
   optionType: OptionType;
   strike: number;
@@ -13,4 +13,21 @@ export interface PortfolioPosition {
   costBasis: number;
   marketValue: number;
   underlyingPrice: number;
+}
+
+export interface PositionAnalytics extends PortfolioPosition {
+  unrealizedPl: number;
+  unrealizedPlPct: number;
+  intrinsicValue: number;
+  extrinsicValue: number;
+  breakEven: number;
+  daysToExpiration: number;
+  deltaEstimate: number;
+}
+
+export interface ProjectionScenario {
+  name: string;
+  stockShiftPct: number;
+  volatilityShiftPct: number;
+  daysForward: number;
 }
